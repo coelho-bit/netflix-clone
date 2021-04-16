@@ -10,11 +10,9 @@ class IEmail {
 
 class IPassword {
   minLength: number;
-  specialChar: boolean;
 
-  constructor(minLength: number, specialChar: boolean) {
+  constructor(minLength: number) {
     this.minLength = minLength;
-    this.specialChar = specialChar;
   }
 }
 
@@ -22,4 +20,4 @@ export const Email = new IEmail(
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
 
-export const Password = new IPassword(8, true);
+export const Password = new IPassword(6);

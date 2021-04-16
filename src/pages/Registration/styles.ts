@@ -18,7 +18,7 @@ export const Container = styled.div`
 export const ContentWrapper = styled.div`
   display: flex;
   gap: 10px;
-  height: max(50vh, 400px);
+  height: max(50vh, 700px);
   width: 80%;
   max-width: 450px;
   margin: 0 auto;

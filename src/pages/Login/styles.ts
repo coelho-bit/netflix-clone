@@ -10,7 +10,7 @@ export const Container = styled.div`
   }
 `;
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.form`
   width: 90%;
   max-width: 500px;
   margin: 50px auto;

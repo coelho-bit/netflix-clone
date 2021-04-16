@@ -1,13 +1,14 @@
 import React, { useRef, useState } from "react";
 
-import { Container, Input, Error } from "./styles";
+import { Container, Input } from "./styles";
 
-import { InputType, Email, Password } from "./Types/Types";
+import { InputType, Email, Password } from "../../contexts/Types/Types";
+import InputError from "../InputError/index";
 
 interface FormInputProps {
   placeholder: string;
   type: InputType;
-  callback: (value: string) => {};
+  callback: (value: string) => void;
   inBlack?: boolean;
 }
 
@@ -17,6 +18,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   callback,
   inBlack = false,
 }) => {
+  // const { set } = useForm();
   const [error, setError] = useState<string>();
   let inputRef = useRef<HTMLInputElement>(null);
 
@@ -25,8 +27,6 @@ export const FormInput: React.FC<FormInputProps> = ({
   }
 
   function inputHandler() {
-    callback(getValue());
-
     if (type === Email) {
       if (!type.regex.test(getValue()) || getValue() === "") {
         setError("Digite um email válido.");
@@ -37,7 +37,7 @@ export const FormInput: React.FC<FormInputProps> = ({
 
     if (type === Password) {
       if (getValue().length < type.minLength) {
-        setError("Sua senha deve ter no mínimo 8 caracteres.");
+        setError(`Sua senha deve ter no mínimo ${type.minLength} caracteres.`);
       } else {
         setError("");
       }
@@ -49,11 +49,14 @@ export const FormInput: React.FC<FormInputProps> = ({
       <Input
         type={type === Password ? "password" : ""}
         ref={inputRef}
+        onChange={() => {
+          callback(getValue())
+        }}
         onBlur={() => inputHandler()}
         placeholder={placeholder}
         inBlack={inBlack}
       />
-      {error && <Error inBlack={inBlack}>{error}</Error>}
+      {error && <InputError inBlack={inBlack}>{error}</InputError>}
     </Container>
   );
 };

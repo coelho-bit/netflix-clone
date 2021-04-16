@@ -16,8 +16,3 @@ export const Input = styled.input<{ inBlack: boolean }>`
   margin-top: 20px;
 `;
 
-export const Error = styled.span<{ inBlack?: boolean }>`
-  color: ${(props) => props.inBlack ? "#e87c03": "#b92d2b"} ;
-  font-weight: 400;
-  font-size: 1.4rem;
-`;

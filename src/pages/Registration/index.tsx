@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/Header";
 
 import {
@@ -12,8 +12,8 @@ import {
 import Footer from "../../components/Footer";
 import { Link, useHistory } from "react-router-dom";
 import { FormInput } from "../../components/FormInput/index";
-import { Email, Password } from "../../components/FormInput/Types/Types";
-import { useAuth } from '../../contexts/AuthContext';
+import { Email, Password } from "../../contexts/Types/Types";
+import { useAuth, FirebaseError } from '../../contexts/AuthContext';
 import Error from '../../components/Error/index';
 
 const Registration: React.FC = ({ children }) => {
@@ -42,20 +42,20 @@ export const Confirmation: React.FC = () => {
   );
 };
 
-export const Form: React.FC = () => {
-  const { signup, validateError } = useAuth();
-  const history = useHistory();
+let email: string = "";
+let password: string = "";
 
-  let email: string = "";
-  let password: string = "";
+export const Form: React.FC = () => {
+  const { signup, validateSignupError } = useAuth();
+  const [error, setError] = useState<FirebaseError>();
+  const history = useHistory();
 
   async function createUserWithEmailAndPassword() {
     try {
       await signup(email, password);
       history.push("/login");
     } catch(e) {
-      validateError(e.code);
-      console.log(e);
+      setError(validateSignupError(e.code));
     }
   }
 
@@ -65,7 +65,7 @@ export const Form: React.FC = () => {
       <Subtitle>
         Faltam só mais alguns passos! Nós também detestamos formulários.
       </Subtitle>
-      <Error/>
+      {error && <Error>{error.message}</Error>}
       <FormInput
         callback={(value: string) => (email = value)}
         placeholder="Email"

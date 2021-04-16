@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 
-import { Grouper, Title, Navigate, MoviesWrapper } from "./styles";
-import Movie from "../Movie/index";
-import { IMovie } from "../../api/api";
+import { Grouper, Title, Navigate, MoviesWrapper, Image } from "./styles";
+// import Movie from "../Movie/index";
+import { IMovie } from "../../api/entity";
 
 const MoviesSection: React.FC<{ title: string; movies: IMovie[] }> = ({
   title,
@@ -29,11 +29,11 @@ const MoviesSection: React.FC<{ title: string; movies: IMovie[] }> = ({
           {movies &&
             movies.map((movie) => {
               return (
-                <img
+                <Image 
+                  position={movies.indexOf(movie)}
                   src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                   alt={movie.name}
-                  style={{ borderRadius: "5px" }}
-                ></img>
+                ></Image>
               );
             })}
         </MoviesWrapper>

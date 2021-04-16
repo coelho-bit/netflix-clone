@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const MoviesAnimation = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
 
 export const Title = styled.h3`
   font-size: 2rem;
@@ -15,10 +27,17 @@ export const Grouper = styled.div`
   padding: 20px;
 `;
 
+export const Image = styled.img<{position: number}>`
+  border-radius: 5px;
+  animation-name: ${MoviesAnimation};
+  animation-duration: ${(props) => ((props.position + 0.08) * .8)}s;
+`
+
 export const MoviesWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  margin: 0 24px;
   gap: 3px;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -38,4 +57,5 @@ export const Navigate = styled.button<{ rightPosition?: boolean }>`
   justify-content: center;
   align-items: center;
   height: 300px;
+  z-index: 999;
 `;
